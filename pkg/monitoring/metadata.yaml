@@ -1,0 +1,12 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: monitoring.local.community.tanzu.vmware.com
+spec:
+  displayName: local-monitoring
+  longDescription: Monitoring packages for TCE Local
+  shortDescription: Monitoring packages for TCE Local
+  providerName: TCE Local
+  maintainers:
+  - name: Alexandre Roman
+  supportDescription: "Go to github.com/alexandreroman/tce-local for documentation"

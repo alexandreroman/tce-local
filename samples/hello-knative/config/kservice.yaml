@@ -1,0 +1,27 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: kuar
+  namespace: hello-knative
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "10"
+        autoscaling.knative.dev/metric: "rps"
+        autoscaling.knative.dev/target: "5"
+    spec:
+      containers:
+      - name: app
+        image: gcr.io/kuar-demo/kuard-amd64:blue
+        resources:
+          requests:
+            memory: 128M
+          limits:
+            memory: 128M
+        livenessProbe:
+          httpGet:
+            path: /healthy
+        readinessProbe:
+          httpGet:
+            path: /ready

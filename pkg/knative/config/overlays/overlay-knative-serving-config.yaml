@@ -1,0 +1,19 @@
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+
+#@ def config():
+domain:
+  type: real
+  name: #@ "kn.{}".format(data.values.local.domain)
+ingress:
+  external:
+    namespace: contour
+  internal:
+    namespace: contour
+#@ end
+
+#@overlay/match by=overlay.subset({"metadata":{"name": "knative-serving-pkg-values"}})
+---
+stringData:
+  values.yml: #@ yaml.encode(config())

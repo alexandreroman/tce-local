@@ -1,0 +1,25 @@
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+
+#@ def config():
+grafana:
+  service:
+    type: ClusterIP
+  config:
+    datasource_yaml: |-
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: prometheus-server.prometheus.svc.cluster.local
+        access: proxy
+        isDefault: true
+ingress:
+  virtual_host_fqdn: #@ "grafana.{}".format(data.values.local.domain)
+#@ end
+
+#@overlay/match by=overlay.subset({"metadata":{"name": "grafana-pkg-values"}})
+---
+stringData:
+  values.yml: #@ yaml.encode(config())

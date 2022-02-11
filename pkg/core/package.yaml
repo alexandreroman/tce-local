@@ -1,0 +1,22 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: core.local.community.tanzu.vmware.com.1.0.0
+spec:
+  refName: core.local.community.tanzu.vmware.com
+  version: 1.0.0
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: ghcr.io/alexandreroman/tce-local-core
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - '-'
+          - .imgpkg/images.yml
+      deploy:
+      - kapp: {}

@@ -1,0 +1,12 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: knative.local.community.tanzu.vmware.com
+spec:
+  displayName: local-knative
+  longDescription: Knative packages for TCE Local
+  shortDescription: Knative packages for TCE Local
+  providerName: TCE Local
+  maintainers:
+  - name: Alexandre Roman
+  supportDescription: "Go to github.com/alexandreroman/tce-local for documentation"

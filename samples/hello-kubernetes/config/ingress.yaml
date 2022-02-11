@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: hello-kubernetes
+spec:
+  rules:
+  - host: hello-kubernetes.127.0.0.1.nip.io
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /
+        backend:
+          service:
+            name: kuar
+            port:
+              number: 80

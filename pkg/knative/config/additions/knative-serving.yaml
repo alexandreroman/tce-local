@@ -1,0 +1,21 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: knative-serving
+spec:
+  packageRef:
+    refName: knative-serving.community.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=0.22.0"
+  serviceAccountName: local-knative-default-sa
+  values:
+  - secretRef:
+      name: knative-serving-pkg-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: knative-serving-pkg-values
+type: Opaque
+stringData:
+  values.yml:

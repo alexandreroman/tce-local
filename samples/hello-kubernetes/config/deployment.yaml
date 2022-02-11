@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuar
+  namespace: hello-kubernetes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kuar
+  template:
+    metadata:
+      labels:
+        app: kuar
+    spec:
+      containers:
+      - name: app
+        image: gcr.io/kuar-demo/kuard-amd64:blue
+        resources:
+          requests:
+            memory: 128M
+          limits:
+            memory: 128M
+        ports:
+        - name: http
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /healthy
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /ready
