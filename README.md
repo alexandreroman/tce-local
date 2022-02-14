@@ -201,6 +201,25 @@ As you start using this app again, new pods will be created (up to 10 instances)
 
 Have fun!
 
+### Enable Metrics API
+
+By default, TCE doesn't support Metrics API, but the Tanzu core package already provide the kapp package on it
+
+Run this command to deploy metrics-server:
+
+```shell
+tanzu package install global-metrics-server --package-name metrics-server.tanzu.vmware.com --version 0.4.0+vmware.1-tkg.1 --namespace tkg-system
+```
+
+After installing and show the status is `Reconciling`
+
+```shell
+kubectl top node
+kubectl top pod -n kube-system
+```
+
+![Show metrics with metrics-server](images/tce-global-metrics-service.png)
+
 ## Contribute
 
 Contributions are always welcome!
