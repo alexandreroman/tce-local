@@ -95,7 +95,7 @@ Here are the packages available in this repository:
   [Prometheus](https://tanzucommunityedition.io/docs/latest/package-readme-prometheus-2.27.0/) /
   [Grafana](https://tanzucommunityedition.io/docs/latest/package-readme-grafana-7.5.7/)
 - `local-knative`: package including
-  [Knative Eventing](https://tanzucommunityedition.io/docs/latest/package-readme-knative-serving-1.0.0/)
+  [Knative Serving](https://tanzucommunityedition.io/docs/latest/package-readme-knative-serving-1.0.0/)
 
 Make sure the package repository is fully reconciled:
 
@@ -131,7 +131,7 @@ Deploy the `local-monitoring` package:
 tanzu package install local-monitoring --package-name monitoring.local.community.tanzu.vmware.com --version 1.0.0
 ```
 
-You now have new namespaces: `prometheus` and `grafana`.
+Now you have new namespaces: `prometheus` and `grafana`.
 
 Access your Prometheus server at: http://prometheus.127.0.0.1.nip.io.
 
