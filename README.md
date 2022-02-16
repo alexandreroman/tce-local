@@ -158,6 +158,16 @@ In a matter of minutes, you'll be able to deploy scale-to-zero apps thanks to TC
 this opinionated package.
 Your Knative services will be available under `<name>.<ns>.kn.127.0.0.1.nip.io`.
 
+### Deploying all packages
+
+Looking for a quick way to deploy all packages? I've got you covered!
+
+Use this command to deploy all packages tailored for local use to your cluster:
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/alexandreroman/tce-local/main/tce-local-install-all.yml
+```
+
 ## Deploying apps to your local Kubernetes cluster
 
 So, you have your Kubernetes cluster up and running on your workstation, now what?

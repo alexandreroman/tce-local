@@ -1,0 +1,134 @@
+#!
+#! Use this file to install ALL local packages for your TCE unmanaged cluster:
+#! $ kubectl apply -f tce-local-install-all.yml
+#!
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: tce-local
+  namespace: tanzu-package-repo-global
+spec:
+  fetch:
+    imgpkgBundle:
+      image: ghcr.io/alexandreroman/tce-local
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: local-core-default-sa
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-core-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-core-role-binding
+subjects:
+- kind: ServiceAccount
+  name: local-core-default-sa
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: local-core-role
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: local-core
+  namespace: default
+spec:
+  packageRef:
+    refName: core.local.community.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=1.0.0"
+  serviceAccountName: local-core-default-sa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: local-monitoring-default-sa
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-monitoring-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-monitoring-role-binding
+subjects:
+- kind: ServiceAccount
+  name: local-monitoring-default-sa
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: local-monitoring-role
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: local-monitoring
+  namespace: default
+spec:
+  packageRef:
+    refName: monitoring.local.community.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=1.0.0"
+  serviceAccountName: local-monitoring-default-sa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: local-knative-default-sa
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-knative-role
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: local-knative-role-binding
+subjects:
+- kind: ServiceAccount
+  name: local-knative-default-sa
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: local-knative-role
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: local-knative
+  namespace: default
+spec:
+  packageRef:
+    refName: knative.local.community.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=1.0.0"
+  serviceAccountName: local-knative-default-sa
