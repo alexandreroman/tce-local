@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+---
 apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: PackageMetadata
 metadata:
@@ -9,4 +11,4 @@ spec:
   providerName: TCE Local
   maintainers:
   - name: Alexandre Roman
-  supportDescription: "Go to github.com/alexandreroman/tce-local for documentation"
+  supportDescription: #@ "Go to {} for documentation".format(data.values.source.url)

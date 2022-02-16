@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+---
 apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
@@ -5,11 +7,12 @@ metadata:
 spec:
   refName: core.local.community.tanzu.vmware.com
   version: 1.0.0
+  releasedAt: #@ data.values.build.date
   template:
     spec:
       fetch:
       - imgpkgBundle:
-          image: ghcr.io/alexandreroman/tce-local-core
+          image: #@ data.values.pkg.core
       template:
       - ytt:
           paths:
