@@ -88,9 +88,9 @@ can use this Kubernetes cluster locally right away.
 Here are the packages available in this repository:
 
 - `local-core`: base package including
-  [cert-manager](https://tanzucommunityedition.io/docs/latest/package-readme-cert-manager-1.5.4/)
-  and [Contour](https://tanzucommunityedition.io/docs/latest/package-readme-contour-1.19.1/)
-  (ingress controller), with a default configuration suited for local use
+  [cert-manager](https://tanzucommunityedition.io/docs/latest/package-readme-cert-manager-1.5.4/),
+  [Contour](https://tanzucommunityedition.io/docs/latest/package-readme-contour-1.19.1/) (ingress controller) and
+  [Metrics Server](https://github.com/vmware-tanzu/community-edition/tree/main/addons/packages/metrics-server/0.5.1), with a default configuration suited for local use
 - `local-monitoring`: package including
   [Prometheus](https://tanzucommunityedition.io/docs/latest/package-readme-prometheus-2.27.0/) /
   [Grafana](https://tanzucommunityedition.io/docs/latest/package-readme-grafana-7.5.7/)

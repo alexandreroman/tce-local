@@ -16,6 +16,9 @@ check-carvel:
 clean:
 	rm -rf repo pkg/core/.imgpkg pkg/monitoring/.imgpkg pkg/knative/.imgpkg
 
+lock: check-carvel # Lock files.
+	vendir sync --chdir pkg/core
+
 push: check-carvel # Build and push packages.
 	rm -rf pkg/core/.imgpkg && mkdir pkg/core/.imgpkg && kbld -f pkg/core/config --imgpkg-lock-output pkg/core/.imgpkg/images.yml && \
 	rm -rf pkg/monitoring/.imgpkg && mkdir pkg/monitoring/.imgpkg && kbld -f pkg/monitoring/config --imgpkg-lock-output pkg/monitoring/.imgpkg/images.yml && \

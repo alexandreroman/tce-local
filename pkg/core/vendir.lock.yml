@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Add OVA download link to release downloads (#3134)...
+      sha: 57d28405671b55d84eb06d984ea66deb8a393f2a
+      tags:
+      - v0.11.0-dev.1
+    path: .
+  path: config/additions/metrics-server
+kind: LockConfig

@@ -1,0 +1,22 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: metrics-server
+spec:
+  packageRef:
+    refName: metrics-server.community.tanzu.vmware.com
+    versionSelection:
+      constraints: ">=0.5.1"
+  serviceAccountName: local-monitoring-default-sa
+  values:
+  - secretRef:
+      name: metrics-server-pkg-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: metrics-server-pkg-values
+type: Opaque
+stringData:
+  values.yml: |-
+    namespace: metrics-server
