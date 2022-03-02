@@ -167,6 +167,12 @@ Use this command to deploy all packages tailored for local use to your cluster:
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/alexandreroman/tce-local/main/tce-local-install-all.yml
 ```
+You can follow the deployment of the packages by using this command:
+```shell
+tanzu package installed list
+```
+
+**Note** Even if there are `Reconcile failed: Error`, just wait a couple a minutes, the reconciliation will fix it ;)
 
 ## Deploying apps to your local Kubernetes cluster
 
