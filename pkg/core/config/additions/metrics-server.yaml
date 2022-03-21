@@ -8,7 +8,8 @@ spec:
   packageRef:
     refName: metrics-server.community.tanzu.vmware.com
     versionSelection:
-      constraints: ">=0.5.1"
+      constraints: ">0.0.0"
+      prereleases: {}
   serviceAccountName: local-core-default-sa
   values:
   - secretRef:

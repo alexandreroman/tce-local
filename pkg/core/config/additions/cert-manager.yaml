@@ -8,5 +8,6 @@ spec:
   packageRef:
     refName: cert-manager.community.tanzu.vmware.com
     versionSelection:
-      constraints: ">=1.5.3"
+      constraints: ">0.0.0"
+      prereleases: {}
   serviceAccountName: local-core-default-sa
