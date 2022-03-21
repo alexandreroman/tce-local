@@ -2,15 +2,18 @@ apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageInstall
 metadata:
   name: metrics-server
+  namespace: tkg-system
   annotations:
     kapp.k14s.io/change-group: "tce-local/metrics-server"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/metrics-server-rbac"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/metrics-server-rbac"
 spec:
   packageRef:
     refName: metrics-server.community.tanzu.vmware.com
     versionSelection:
       constraints: ">0.0.0"
       prereleases: {}
-  serviceAccountName: local-core-default-sa
+  serviceAccountName: local-metrics-server-sa
   values:
   - secretRef:
       name: metrics-server-pkg-values
@@ -19,9 +22,47 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: metrics-server-pkg-values
+  namespace: tkg-system
   annotations:
     kapp.k14s.io/change-group: "tce-local/metrics-server"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/metrics-server-rbac"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/metrics-server-rbac"
 type: Opaque
 stringData:
   values.yml: |-
-    namespace: metrics-server
+    metricsServer:
+      namespace: metrics-server
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: local-metrics-server-sa
+  namespace: tkg-system
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/metrics-server-rbac"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: local-metrics-server-role-binding
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/metrics-server-rbac"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: local-metrics-server-role
+subjects:
+- kind: ServiceAccount
+  name: local-metrics-server-sa
+  namespace: tkg-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: local-metrics-server-role
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/metrics-server-rbac"
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]

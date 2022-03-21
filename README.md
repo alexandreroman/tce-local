@@ -22,8 +22,8 @@ Make sure you have a Docker daemon running. You may use Docker Desktop if applic
 to download and install TCE on your workstation.
 
 **Note** Please use at least
-[version 0.10-rc4](https://github.com/vmware-tanzu/community-edition/releases/tag/v0.10.0-rc.4).
-This guide relies on the `unmanaged-cluster` plugin, which is not available before that version.
+[version 0.11+](https://github.com/vmware-tanzu/community-edition/releases/tag/v0.11.0), as
+this guide relies on the `unmanaged-cluster` plugin.
 
 After installing TCE, run this command to check everything is ready:
 
@@ -38,12 +38,14 @@ If there is no error at this point, then you're good to proceed further.
 Run this command to create a local Kubernetes cluster:
 
 ```shell
-tanzu unmanaged-cluster create tce-local -c calico -p 80:80 -p 443:443
+tanzu unmanaged-cluster create tce-local -p 80:80 -p 443:443 --additional-repo projects.registry.vmware.com/tce/main:v0.11.0 --additional-repo ghcr.io/alexandreroman/tce-local
 ```
 
-**Note** Calico is used as the CNI because Antrea (the default CNI) has issues
-with allocated IP addresses when the cluster is stopped/started. This will
-get fixed eventually.
+**Note** This command installs the `tce-local` package repository,
+which includes a set of pre-configured packages, tailored for local use.
+
+**Note** Edit the `tce-main` package repository version in this command
+with the TCE version you're using.
 
 **Note** Ports `80` and `443` must be available on your workstation, as these ports
 will be used to get access to your Kubernetes apps.
@@ -76,13 +78,7 @@ We're about to install additional components.
 
 ### Deploying core components
 
-Run this command to deploy the `tce-local` package repository:
-
-```shell
-tanzu package repository add tce-local --url ghcr.io/alexandreroman/tce-local -n tanzu-package-repo-global
-```
-
-This package repository includes a set of pre-configured packages, so that you
+The `tce-local` package repository includes a set of pre-configured packages, so that you
 can use this Kubernetes cluster locally right away.
 
 Here are the packages available in this repository:
