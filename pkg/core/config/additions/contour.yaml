@@ -2,6 +2,10 @@ apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageInstall
 metadata:
   name: contour
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/contour"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/cert-manager"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/cert-manager"
 spec:
   packageRef:
     refName: contour.community.tanzu.vmware.com
@@ -16,6 +20,10 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: contour-pkg-values
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/contour"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/cert-manager"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/cert-manager"
 type: Opaque
 stringData:
   values.yml: |-

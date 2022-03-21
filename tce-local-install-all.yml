@@ -2,12 +2,18 @@
 #! Use this file to install ALL local packages for your TCE unmanaged cluster:
 #! $ kubectl apply -f tce-local-install-all.yml
 #!
+#! ... or even better with kapp from the Carvel tools
+#! (installation order will be respected):
+#! $ kapp deploy -a tce-local -f tce-local-install-all.yml
+#!
 ---
 apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageRepository
 metadata:
   name: tce-local
   namespace: tanzu-package-repo-global
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/repo"
 spec:
   fetch:
     imgpkgBundle:
@@ -18,11 +24,19 @@ kind: ServiceAccount
 metadata:
   name: local-core-default-sa
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-core-role
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 rules:
 - apiGroups: ["*"]
   resources: ["*"]
@@ -32,6 +46,10 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-core-role-binding
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 subjects:
 - kind: ServiceAccount
   name: local-core-default-sa
@@ -46,6 +64,10 @@ kind: PackageInstall
 metadata:
   name: local-core
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/core"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/rbac"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/rbac"
 spec:
   packageRef:
     refName: core.local.community.tanzu.vmware.com
@@ -58,11 +80,19 @@ kind: ServiceAccount
 metadata:
   name: local-monitoring-default-sa
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-monitoring-role
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 rules:
 - apiGroups: ["*"]
   resources: ["*"]
@@ -72,6 +102,10 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-monitoring-role-binding
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 subjects:
 - kind: ServiceAccount
   name: local-monitoring-default-sa
@@ -86,6 +120,10 @@ kind: PackageInstall
 metadata:
   name: local-monitoring
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/monitoring"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/core"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/core"
 spec:
   packageRef:
     refName: monitoring.local.community.tanzu.vmware.com
@@ -98,11 +136,19 @@ kind: ServiceAccount
 metadata:
   name: local-knative-default-sa
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-knative-role
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 rules:
 - apiGroups: ["*"]
   resources: ["*"]
@@ -112,6 +158,10 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: local-knative-role-binding
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/rbac"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/repo"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/repo"
 subjects:
 - kind: ServiceAccount
   name: local-knative-default-sa
@@ -126,6 +176,10 @@ kind: PackageInstall
 metadata:
   name: local-knative
   namespace: default
+  annotations:
+    kapp.k14s.io/change-group: "tce-local/knative"
+    kapp.k14s.io/change-rule.create-order: "upsert after upserting tce-local/core"
+    kapp.k14s.io/change-rule.delete-order: "delete before deleting tce-local/core"
 spec:
   packageRef:
     refName: knative.local.community.tanzu.vmware.com
