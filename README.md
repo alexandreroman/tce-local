@@ -190,7 +190,7 @@ The app is available at http://hello-kubernetes.127.0.0.1.nip.io.
 ### Scale-to-zero with Knative
 
 Thanks to Knative, you can build scale-to-zero apps, while simplifying deployment:
-basicall you declare a Knative Service, and forget about everything else
+just declare a Knative Service, and forget about everything else
 (`Deployment`, `Service`, `Ingress`)...!
 
 Run this command to deploy a simple Knative Service:
