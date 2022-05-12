@@ -168,8 +168,6 @@ You can follow the deployment of the packages by using this command:
 tanzu package installed list
 ```
 
-**Note** Even if there are `Reconcile failed: Error`, just wait a couple a minutes, the reconciliation will fix it ;)
-
 ## Deploying apps to your local Kubernetes cluster
 
 So, you have your Kubernetes cluster up and running on your workstation, now what?
