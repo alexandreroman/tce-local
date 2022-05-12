@@ -38,7 +38,7 @@ If there is no error at this point, then you're good to proceed further.
 Run this command to create a local Kubernetes cluster:
 
 ```shell
-tanzu unmanaged-cluster create tce-local -p 80:80 -p 443:443 --additional-repo projects.registry.vmware.com/tce/main:v0.11.0 --additional-repo ghcr.io/alexandreroman/tce-local
+tanzu unmanaged-cluster create tce-local -p 80:80 -p 443:443 --additional-repo projects.registry.vmware.com/tce/main:v0.12.0 --additional-repo ghcr.io/alexandreroman/tce-local
 ```
 
 **Note** This command installs the `tce-local` package repository,
